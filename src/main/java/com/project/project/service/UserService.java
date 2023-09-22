@@ -28,4 +28,8 @@ public class UserService {
     public User getUserById(int userid){
         return userRepository.findById(userid).orElseThrow(()->new RuntimeException("User Not found"));
     }
+
+    public User getUserByEmail(String email){
+        return userRepository.findByEmail(email).orElseThrow(()->new RuntimeException("User Not Found By This Email"));
+    }
 }
