@@ -32,4 +32,23 @@ public class UserService {
     public User getUserByEmail(String email){
         return userRepository.findByEmail(email).orElseThrow(()->new RuntimeException("User Not Found By This Email"));
     }
+
+    public User updateUser(User user,int userid){
+        User existingUser = userRepository.findById(userid).orElseThrow(()->new RuntimeException("User Not Found"));
+        existingUser.setName(user.getName());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setAddress(user.getAddress());
+        existingUser.setMobile_no(user.getMobile_no());
+        existingUser.setGender(user.getGender());
+        existingUser.setDate_of_brith(user.getDate_of_brith());
+
+        return  userRepository.save(existingUser);
+    }
+
+    public void daleteUser(int userid){
+        userRepository.findById(userid).orElseThrow(()->new RuntimeException("user Not Found"));
+        userRepository.deleteById(userid);
+    }
+
+
 }
