@@ -1,6 +1,7 @@
 package com.project.project.controller;
 
 
+import com.project.project.dto.UserDto;
 import com.project.project.entity.JwtRequest;
 import com.project.project.entity.JwtResponce;
 import com.project.project.model.User;
@@ -19,7 +20,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("auth")
+@RequestMapping("/auth")
 public class AuthController {
     @Autowired
     private UserDetailsService userDetailsService;
@@ -67,8 +68,8 @@ public class AuthController {
     }
 
     @PostMapping("/save")
-    public User saveUser(@RequestBody User user){
-        return userService.createUser(user);
+    public UserDto saveUser(@RequestBody UserDto userdto){
+        return userService.createUser(userdto);
     }
 
 }

@@ -1,7 +1,10 @@
 package com.project.project.service;
 
+import com.project.project.dto.UserDto;
+import com.project.project.exception.BadCredentialException;
 import com.project.project.model.User;
 import com.project.project.repository.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,9 +19,19 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public User createUser(User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public UserDto createUser(UserDto userDto){
+        if(userDto.getName().isEmpty()||userDto.getName().length()==0){
+            throw new BadCredentialException("501","please give proper input");
+        }
+
+      userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        User user = modelMapper.map(userDto ,User.class);
+        User saveUser=userRepository.save(user);
+        return modelMapper.map(saveUser,UserDto.class);
+
     }
 
     public List<User> getUsers(){

@@ -30,7 +30,7 @@ public class User implements UserDetails {
     @Column(name = "mobile no")
     private long  mobile_no;
     @Column(name = "date of brith")
-    private Date date_of_brith;
+    private String date_of_brith;
     @Column(name = "gender")
     private String gender;
     @Column(name = "address")
