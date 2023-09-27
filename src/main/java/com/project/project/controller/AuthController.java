@@ -4,6 +4,8 @@ package com.project.project.controller;
 import com.project.project.dto.UserDto;
 import com.project.project.entity.JwtRequest;
 import com.project.project.entity.JwtResponce;
+import com.project.project.exception.BusinessException;
+import com.project.project.exception.ControllerException;
 import com.project.project.model.User;
 import com.project.project.security.JwtHelper;
 import com.project.project.service.UserService;
@@ -68,8 +70,16 @@ public class AuthController {
     }
 
     @PostMapping("/save")
-    public UserDto saveUser(@RequestBody UserDto userdto){
-        return userService.createUser(userdto);
-    }
+    public ResponseEntity<?> saveUser(@RequestBody UserDto userdto){
+//        try {
+            return new ResponseEntity<>(userService.createUser(userdto),HttpStatus.CREATED)  ;
+//        }catch (BusinessException e) {
+//            ControllerException ce = new ControllerException(e.getErrorcode(),e.getErrormessage());
+//            return new ResponseEntity<ControllerException>(ce,HttpStatus.BAD_REQUEST);
+//        }catch (Exception e) {
+//            ControllerException ce = new ControllerException("610","Something went wrong in controller layer");
+//            return new ResponseEntity<ControllerException>(ce,HttpStatus.BAD_REQUEST);
+//    }
 
+}
 }
